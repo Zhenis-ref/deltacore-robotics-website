@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeltaCore Robotics</title>
+  <meta name="description" content="DeltaCore Robotics develops mathematical, architectural, and legal foundations for mission-driven autonomous systems and trusted robotic partners of humanity." />
+  <style>
+    :root {
+      --bg: #f7faff;
+      --panel: #ffffff;
+      --ink: #061426;
+      --muted: #627188;
+      --line: #dbe5f2;
+      --blue: #1457e6;
+      --blue2: #0b43b8;
+      --soft: #eaf2ff;
+      --shadow: 0 24px 70px rgba(8, 31, 62, 0.10);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at top right, #eaf2ff 0, #f7faff 32%, #ffffff 68%);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+      font-size: 19px;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      display: block;
+    }
+    nav { display: flex; gap: 26px; align-items: center; }
+    nav a { color: var(--muted); font-size: 15px; font-weight: 600; }
+    nav a:hover { color: var(--blue); }
+
+    .hero {
+      padding: 92px 0 72px;
+      min-height: calc(100vh - 76px);
+      display: flex;
+      align-items: center;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 70px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.75);
+      color: var(--blue2);
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-weight: 800;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(54px, 7vw, 92px);
+      line-height: 0.94;
+      letter-spacing: -0.08em;
+      max-width: 760px;
+    }
+    .hero h2 {
+      margin: 30px 0 24px;
+      font-size: clamp(25px, 3vw, 38px);
+      line-height: 1.18;
+      letter-spacing: -0.05em;
+      max-width: 760px;
+    }
+    .lead {
+      color: var(--muted);
+      font-size: 20px;
+      max-width: 720px;
+      margin: 0 0 34px;
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 14px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 22px;
+      border-radius: 14px;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      background: white;
+      box-shadow: 0 10px 28px rgba(8, 31, 62, 0.06);
+    }
+    .btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .btn.primary:hover { background: var(--blue2); }
+    .btn:hover { transform: translateY(-1px); transition: .2s ease; }
+    .logo-card {
+      background: rgba(255,255,255,0.86);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px;
+    }
+    .hero-logo {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    section { padding: 90px 0; }
+    .section-head { max-width: 860px; margin-bottom: 38px; }
+    .kicker { color: var(--blue); font-weight: 850; letter-spacing: .02em; text-transform: uppercase; font-size: 13px; }
+    h3 {
+      margin: 10px 0 14px;
+      font-size: clamp(34px, 4vw, 56px);
+      line-height: 1.04;
+      letter-spacing: -0.06em;
+    }
+    .section-head p { color: var(--muted); font-size: 20px; margin: 0; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card {
+      background: rgba(255,255,255,0.88);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 16px 45px rgba(8,31,62,.07);
+    }
+    .card h4 { margin: 0 0 12px; font-size: 22px; letter-spacing: -0.04em; }
+    .card p, .card li { color: var(--muted); }
+    .card ul { padding-left: 20px; margin: 0; }
+    .wide { grid-column: span 2; }
+    .metric {
+      font-size: 42px;
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 900;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+    .split { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 22px; align-items: stretch; }
+    .soft { background: linear-gradient(135deg, #ffffff, #eef5ff); }
+    .pill-list { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+    .pill { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 9px 14px; color: var(--muted); font-weight: 700; font-size: 14px; }
+    .links-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .link-card { display: block; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: 0 12px 30px rgba(8,31,62,.06); }
+    .link-card:hover { border-color: #9db8ee; transform: translateY(-1px); transition: .2s ease; }
+    .link-card strong { display: block; font-size: 18px; margin-bottom: 6px; }
+    .link-card span { color: var(--muted); font-size: 15px; }
+    footer { padding: 44px 0; border-top: 1px solid var(--line); color: var(--muted); background: #fff; }
+    .footer-row { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); font-weight: 700; }
+    .footer-links a:hover { color: var(--blue); }
+
+    @media (max-width: 920px) {
+      .hero-grid, .split { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+      .wide { grid-column: span 1; }
+      nav { display: none; }
+      .hero { padding-top: 58px; }
+      .logo-card { padding: 22px; }
+      .links-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="DeltaCore Robotics home">
+        <img class="brand-mark" src="logo.png" alt="DeltaCore Robotics logo" />
+        <span>DeltaCore Robotics</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#mission">Mission</a>
+        <a href="#problem">Problem</a>
+        <a href="#solution">Solution</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#applications">Applications</a>
+        <a href="#licensing">Licensing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Mission-driven autonomous systems</div>
+          <h1>DeltaCore Robotics</h1>
+          <h2>Building mathematical, architectural, and legal foundations for autonomous systems devoted to their missions and designed to become trusted partners of humanity.</h2>
+          <p class="lead">DeltaCore Robotics develops foundational technologies that enable autonomous systems to act predictably, safely, and purposefully. Our goal is to lay the groundwork for a new generation of robots and artificial intelligence systems that collaborate with humans, contribute to the advancement of civilization, and participate in the exploration of new technological and cosmic frontiers.</p>
+          <div class="actions">
+            <a class="btn primary" href="https://www.therobotreport.com/phase-stability-regulator-based-two-dynamic-parameters-autonomous-mobile-robots/" target="_blank" rel="noopener">Robot Stability Article</a>
+            <a class="btn" href="https://www.therobotreport.com/make-robots-predictable-priority-based-architecture-new-legal-model/" target="_blank" rel="noopener">Mission Architecture Article</a>
+            <a class="btn" href="https://github.com/Zhenis-ref/DeltaCore-Robot-Sim" target="_blank" rel="noopener">View Simulations</a>
+            <a class="btn" href="mailto:contact@deltacore-robotics.com">Contact for Licensing</a>
+          </div>
+        </div>
+        <div class="logo-card">
+          <img class="hero-logo" src="logo.png" alt="DeltaCore Robotics logo" />
+        </div>
+      </div>
+    </section>
+
+    <section id="mission">
+      <div class="container split">
+        <div class="section-head">
+          <div class="kicker">Our Mission</div>
+          <h3>Robots as partners of humanity</h3>
+          <p>Autonomous systems should be created not as competitors to humans, but as reliable assistants and partners.</p>
+        </div>
+        <div class="card soft">
+          <h4>Our mission is to build the foundation for autonomous systems that:</h4>
+          <ul>
+            <li>remain faithful to their missions;</li>
+            <li>act predictably and safely;</li>
+            <li>collaborate with humans;</li>
+            <li>assist in industry, transportation, and science;</li>
+            <li>contribute to the advancement of civilization;</li>
+            <li>participate in the exploration of Earth and space.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="problem">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">The Problem</div>
+          <h3>Modern autonomous systems remain unpredictable</h3>
+          <p>Despite rapid progress in robotics and artificial intelligence, autonomous systems still face fundamental challenges.</p>
+        </div>
+        <div class="cards">
+          <div class="card"><h4>Behavioral instability</h4><p>Robots may oscillate, hesitate, or switch unpredictably between alternatives in dynamic environments.</p></div>
+          <div class="card"><h4>Decision conflict</h4><p>Conflicting commands, goals, and environmental pressures can create unstable internal decision states.</p></div>
+          <div class="card"><h4>Legal uncertainty</h4><p>Autonomous systems do not fit cleanly into traditional legal categories of objects or legal subjects.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="solution">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Our Solution</div>
+          <h3>A unified foundation for stable and mission-oriented autonomous intelligence</h3>
+          <p>DeltaCore Robotics integrates mathematical regulation, mission architecture, and a legal framework for autonomous systems.</p>
+        </div>
+        <div class="cards">
+          <div class="card"><h4>The ΔN–ΔD Mathematical Model</h4><p>Management of dynamics, non-equilibrium, internal duality, and complexity.</p></div>
+          <div class="card"><h4>Mission and Subject Architecture</h4><p>Formation of stable goal-oriented behavior through mission hierarchy and interaction priorities.</p></div>
+          <div class="card"><h4>Neutral-Autonomous Status</h4><p>A legal framework for allocating responsibility in autonomous systems.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="evidence">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Evidence and Results</div>
+          <h3>Practical and scientific validation</h3>
+          <p>The approach is supported by simulation studies, industry publications, patent activity, open repositories, and archived technical artifacts.</p>
+        </div>
+        <div class="cards">
+          <div class="card"><div class="metric">4×–11×</div><h4>Reduction in computational complexity</h4><p>Observed across search, planning, and candidate-compression simulations.</p></div>
+          <div class="card"><h4>Behavioral stability</h4><p>Simulation studies demonstrate suppression of oscillatory decision patterns and improved safety-oriented behavior.</p></div>
+          <div class="card"><h4>Reproducibility</h4><p>Open repositories and structured test scenarios provide a basis for independent technical review.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="applications">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Applications and Scientific Foundation</div>
+          <h3>From robotics to universal control of complexity and dynamics</h3>
+          <p>Although DeltaCore Robotics is focused primarily on creating safe and predictable autonomous robots, the theoretical foundation underlying the project has a much broader scope.</p>
+        </div>
+        <div class="card soft">
+          <p>The ΔN–ΔD model treats the interaction between external non-equilibrium and internal structural duality as a universal principle governing the behavior of complex dynamic systems. In this sense, the technology can be viewed as a higher-level supervisory layer capable of regulating not only robot motion, but also the dynamics of decision-making, branching, and transitions between operating modes.</p>
+          <p>Across multiple domains, the same fundamental idea is investigated: system complexity can be controlled not only by increasing computational resources, but also through structural regulation of the interaction between external pressure and internal configuration.</p>
+          <div class="pill-list">
+            <span class="pill">Autonomous robots</span>
+            <span class="pill">Autonomous driving</span>
+            <span class="pill">Search and planning</span>
+            <span class="pill">Video-generation planning</span>
+            <span class="pill">Plasma-like systems</span>
+            <span class="pill">Power systems</span>
+            <span class="pill">Complex system dynamics</span>
+            <span class="pill">Future space systems</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="licensing">
+      <div class="container split">
+        <div class="section-head">
+          <div class="kicker">Patent Protection and Licensing</div>
+          <h3>Open to collaboration</h3>
+          <p>The technology is currently associated with international patent-pending subject matter.</p>
+        </div>
+        <div class="card">
+          <h4>Collaboration formats</h4>
+          <ul>
+            <li>Non-exclusive licensing</li>
+            <li>Technical partnerships</li>
+            <li>Pilot projects</li>
+            <li>Strategic collaboration</li>
+          </ul>
+          <p><strong>Priority date:</strong> July 9, 2025<br><strong>PCT filing date:</strong> January 5, 2026</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Contact</div>
+          <h3>Get in touch</h3>
+          <p>For licensing, partnership, pilot integration, and technology evaluation inquiries.</p>
+        </div>
+        <div class="links-grid">
+          <a class="link-card" href="mailto:contact@deltacore-robotics.com"><strong>contact@deltacore-robotics.com</strong><span>Email for licensing and partnership discussions</span></a>
+          <a class="link-card" href="tel:+77078035010"><strong>+7-707-8035010</strong><span>Phone</span></a>
+          <a class="link-card" href="https://github.com/Zhenis-ref" target="_blank" rel="noopener"><strong>GitHub Profile</strong><span>Open simulation repositories and technical materials</span></a>
+          <a class="link-card" href="https://github.com/Zhenis-ref/DeltaCore-Robot-Sim" target="_blank" rel="noopener"><strong>DeltaCore-Robot-Sim</strong><span>Autonomous robot behavior simulation testbed</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div>© 2026 DeltaCore Robotics. Founder and Developer: Zhengis Tileubay. Astana, Kazakhstan.</div>
+      <div class="footer-links">
+        <a href="https://www.therobotreport.com/phase-stability-regulator-based-two-dynamic-parameters-autonomous-mobile-robots/" target="_blank" rel="noopener">Robot Stability Article</a>
+        <a href="https://www.therobotreport.com/make-robots-predictable-priority-based-architecture-new-legal-model/" target="_blank" rel="noopener">Mission Architecture Article</a>
+        <a href="https://github.com/Zhenis-ref" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
